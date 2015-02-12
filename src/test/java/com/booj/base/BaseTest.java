@@ -9,6 +9,7 @@ public class BaseTest extends BaseTestSuper {
 	/* WebDriver driver; */
 	/* AccountLoginTest objLogin; */
 	/* BaseTestSub objSetup; */
+	/*test*/
 
 	@Test
 	public void test_Account_Login_Page_Appear_Correct() throws Exception {
@@ -20,7 +21,7 @@ public class BaseTest extends BaseTestSuper {
 		//Returns welcome title and asserts true
 		String loginWelcomeTitle = objLogin.getLoginWelcome();
 		System.out.println(loginWelcomeTitle);
-		Assert.assertTrue(loginWelcomeTitle.equals("Welcome, brenden thornsberry"));
+		Assert.assertTrue(loginWelcomeTitle.equals("Welcome, brenden thornsbery"));
 	}
 
 }
