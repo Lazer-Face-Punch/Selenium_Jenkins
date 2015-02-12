@@ -1,5 +1,6 @@
 package com.booj.base;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.booj.PageObject.AccountLoginTest;
@@ -15,7 +16,11 @@ public class BaseTest extends BaseTestSuper {
 		objLogin = new AccountLoginTest(driver);
 
 		objLogin.loginToBairdAccount("brenden@activewebsite.com", "active");
-
+		
+		//Returns welcome title and asserts true
+		String loginWelcomeTitle = objLogin.getLoginWelcome();
+		System.out.println(loginWelcomeTitle);
+		Assert.assertTrue(loginWelcomeTitle.equals("Welcome, brenden thornsberry"));
 	}
 
 }

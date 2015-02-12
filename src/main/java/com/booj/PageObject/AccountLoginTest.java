@@ -72,7 +72,7 @@ public class AccountLoginTest {
 	}
 	
 	// Verify Welcome Text
-	public String welcomeText() {
+	public String getLoginWelcome() {
 		new WebDriverWait(driver, 10)
 		.until(ExpectedConditions.visibilityOf(welcomeText));
 		return welcomeText.getText();
@@ -110,7 +110,7 @@ public class AccountLoginTest {
 		this.clickLogin();
 		
 		//Verify Welcome Text
-		this.welcomeText();
+		this.getLoginWelcome();
 
 	}
 }
