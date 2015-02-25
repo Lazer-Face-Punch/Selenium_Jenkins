@@ -1,21 +1,20 @@
 package com.booj.PageObject;
 
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /*import pageObject.BaseTestSub;*/
 
 public class AccountLoginTest {
-
+	private static Logger Log = Logger.getLogger(AccountLoginTest.class.getName());
+	
 	WebDriver driver;
 	By loginPopup = By.linkText("Log In");
 	/* By popupBox = By.id("account_login_form"); */
@@ -72,10 +71,12 @@ public class AccountLoginTest {
 	}
 	
 	// Verify Welcome Text
-	public String getLoginWelcome() {
+	public String getLoginWelcome()  {
+
 		new WebDriverWait(driver, 10)
 		.until(ExpectedConditions.visibilityOf(welcomeText));
 		return welcomeText.getText();
+		
 		
 	}
 
@@ -88,29 +89,35 @@ public class AccountLoginTest {
 	 * @param strPasword
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
 
-	public void loginToBairdAccount(String strUserName, String strPassword) {
+	public void loginToBairdAccount(String strUserName, String strPassword){
+		DOMConfigurator.configure("log4j.xml");
 
 		/* this.setUpBeforeTestClass(); */
 
 		// Click account menu item
 		this.clickLoginPopup();
-
+		Log.info("Click account menu item");
+		
 		// Target Popup
 		/* this.targetPopup(); */
 
 		// Fill user name
 		this.setUserName(strUserName);
-
+		Log.info("Fill user name");
+		
 		// Fill password
 		this.setPassword(strPassword);
+		Log.info("Fill password");
 		
 		// Click Login Button
 		this.clickLogin();
+		Log.info("Click login button");
 		
 		//Verify Welcome Text
 		this.getLoginWelcome();
-
+		Log.info("Verify welcome text");
 	}
 }

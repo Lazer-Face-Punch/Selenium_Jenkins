@@ -1,11 +1,18 @@
 package com.booj.base;
 
+import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
+import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 
 import com.booj.PageObject.AccountLoginTest;
 
@@ -15,9 +22,23 @@ public abstract class BaseTestSuper {
 
 	/* protected String baseUrl = "http://www.bairdwarner.com"; */
 
+	
+	@Parameters({"browser"})
 	@BeforeMethod
-	public void setUpBeforeTestClass() {
+	public void setUpBeforeTestClass(@Optional String browser, Method method) {
+		System.out.println("Running Test: " + method.getName());
+	if (browser.equalsIgnoreCase("Firefox")){
 		driver = new FirefoxDriver();
+	}
+	else if (browser.equalsIgnoreCase("HtmlUnit")){
+		driver = new HtmlUnitDriver();
+		LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+
+        java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF); 
+        java.util.logging.Logger.getLogger("org.apache.commons.httpclient").setLevel(Level.OFF);
+	
+	}
+	System.out.println("Thread id = " + Thread.currentThread().getId());
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.get("http://www.bairdwarner.com");
 	}
@@ -51,7 +72,8 @@ public abstract class BaseTestSuper {
 	 */
 
 	@AfterMethod
-	public void tearDown() throws Exception {
+	public void tearDown(ITestResult result) throws Exception {
+		System.out.println("method name:" + result.getMethod().getMethodName());
 		System.out.println("\nBrower close");
 		driver.quit();
 	}
